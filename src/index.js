@@ -99,6 +99,7 @@ function updatePosition(position) {
 }
 
 function updateSearchWeatherCondition(updateTemperatureResponse) {
+    console.log(updateTemperatureResponse.data.weather[0].icon);
     let currentSearchTemperature = Math.round(
         updateTemperatureResponse.data.main.temp
     );
@@ -123,12 +124,20 @@ function updateSearchWeatherCondition(updateTemperatureResponse) {
     let weatherDiscription = document.querySelector("#description");
     weatherDiscription.innerHTML = capitalizeWeatherDiscription;
 
+    let iconElement = document.querySelector("#icon");
+
     document.querySelector("#miniumTemperature").innerHTML = Math.round(
         updateTemperatureResponse.data.main.temp_min
     );
     document.querySelector("#maximumTemperature").innerHTML = Math.round(
         updateTemperatureResponse.data.main.temp_max
     );
+
+    iconElement.setAttribute(
+        "src",
+        `http://openweathermap.org/img/wn/${updateTemperatureResponse.data.weather[0].icon}@2x.png`
+    );
+
     console.log(updateTemperatureResponse.data);
 }
 
