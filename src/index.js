@@ -25,31 +25,46 @@ function updateDisplayTime(time) {
     mainCurrentTime.innerHTML = timeString;
 }
 
-function displayForecast() {
+function formatDay(timestamp) {
+    let date = new Date(timestamp * 1000);
+    let day = date.getDay();
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    return days[day];
+}
+
+function displayForecast(updateTemperatureResponse) {
+    let forecast = updateTemperatureResponse.data.daily;
     let forecastElement = document.querySelector("#forecast");
 
-    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let forecastHTML = `<div class="row forecast">`;
-    days.forEach(function(day) {
-        forecastHTML =
-            forecastHTML +
-            `    
+    forecast.forEach(function(forecastDay, index) {
+        if (index < 6) {
+            forecastHTML =
+                forecastHTML +
+                `    
                         <div class="col-2">
                             <div class = "weather-forecast-date">
-                            ${day}
+                            ${formatDay(forecastDay.dt)}
                             </div>
-                            <img src="image/cloudy.png" alt="Day Forecast Image" width="60" />
+                            <img src="http://openweathermap.org/img/wn/${
+                              forecastDay.weather[0].icon
+                            }@2x.png" alt="Day Forecast Image" width="60" />
                             <div class="weather-forecast-temperature">
-                                <span class="weather-forecast-temperature-max"><strong> 25°C </strong></span>
+                                <span class="weather-forecast-temperature-max"><strong> ${Math.round(
+                                  forecastDay.temp.max
+                                )}°C </strong></span>
                                 <span class="weather-forecast-temperature-min">
-                                <small> 21°C </small>
+                                <small> ${Math.round(
+                                  forecastDay.temp.min
+                                )}°C </small>
                             </span>
                         </div>
                     </div>`;
+        }
     });
     forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
-    console.log(forecastHTML);
 }
 
 function updateBottomTime(time) {
@@ -125,6 +140,14 @@ function updatePosition(position) {
     axios.get(apiUrl).then(updateSearchWeatherCondition);
 }
 
+function getForecast(coordinates) {
+    let apiKey = `1c3ae5d402b2dfe20732c3c1797bed76`;
+    let units = "metric";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
+    console.log(apiUrl);
+    axios.get(apiUrl).then(displayForecast);
+}
+
 function updateSearchWeatherCondition(updateTemperatureResponse) {
     let currentSearchTemperature = Math.round(
         updateTemperatureResponse.data.main.temp
@@ -165,6 +188,8 @@ function updateSearchWeatherCondition(updateTemperatureResponse) {
     );
 
     console.log(updateTemperatureResponse.data);
+
+    getForecast(updateTemperatureResponse.data.coord);
 }
 
 function changePosition() {
@@ -175,4 +200,3 @@ let gpsButton = document.querySelector(".gps-location");
 gpsButton.addEventListener("click", changePosition);
 
 changePosition();
-displayForecast();
