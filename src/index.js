@@ -22,6 +22,13 @@ function updateDisplayTime(time) {
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
     let timeString = `${day} ${hours}:${minutes} ${ampm}`;
+    // let timeString = time.toLocalString("en-us", {
+    //     timeZone,
+    //     weekday: "long",
+    //     hour: "2-digit",
+    //     minute: "2-digit",
+    //     timeZoneName: "shortGeneruc",
+    // });
     mainCurrentTime.innerHTML = timeString;
 }
 
@@ -107,30 +114,6 @@ function citySearch(searchEvent) {
 let displayCity = document.querySelector("#searchBar");
 displayCity.addEventListener("submit", citySearch);
 
-let tempC = 22;
-let tempF = (tempC * 9) / 5 + 32;
-tempF = Math.round(tempF);
-
-function changeToCelsius() {
-    let currentTemp = document.querySelector("#currentTemperature");
-    currentTemp.innerHTML = ` ${tempC} `;
-    displayFahrenheitUnit.classList.remove("active");
-    displayCelsiustUnit.classList.add("active");
-}
-
-function changeToFahrenheit() {
-    let currentTemp = document.querySelector("#currentTemperature");
-    currentTemp.innerHTML = ` ${tempF} `;
-    displayCelsiustUnit.classList.remove("active");
-    displayFahrenheitUnit.classList.add("active");
-}
-
-let displayCelsiustUnit = document.querySelector("#celsiusButton");
-displayCelsiustUnit.addEventListener("click", changeToCelsius);
-
-let displayFahrenheitUnit = document.querySelector("#fahrenheitButton");
-displayFahrenheitUnit.addEventListener("click", changeToFahrenheit);
-
 function updatePosition(position) {
     let currentGpsLatitude = position.coords.latitude;
     let currentGpslongitude = position.coords.longitude;
@@ -152,9 +135,8 @@ function updateSearchWeatherCondition(updateTemperatureResponse) {
     let currentSearchTemperature = Math.round(
         updateTemperatureResponse.data.main.temp
     );
-    tempC = currentSearchTemperature;
-    tempF = Math.round((tempC * 9) / 5 + 32);
-    changeToCelsius();
+    let currentTemp = document.querySelector("#currentTemperature");
+    currentTemp.innerHTML = ` ${currentSearchTemperature} `;
     let currentLocation = updateTemperatureResponse.data.name;
     let updateLocation = document.querySelector("#searchCity");
     updateLocation.innerHTML = `${currentLocation}`;
@@ -199,4 +181,5 @@ function changePosition() {
 let gpsButton = document.querySelector(".gps-location");
 gpsButton.addEventListener("click", changePosition);
 
+// displayCity("New York");
 changePosition();

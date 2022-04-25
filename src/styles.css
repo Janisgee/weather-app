@@ -85,36 +85,10 @@ h2 {
     right: 20px;
 }
 
-.straightline {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.fahrenheit {
-    position: relative;
-    right: 7px;
-}
-
-.fahrenheit:hover {
-    cursor: pointer;
+.celsius {
     font-weight: bolder;
     color: black;
     font-size: 20px;
-}
-
-.celsius:hover {
-    cursor: pointer;
-    font-weight: bolder;
-    color: black;
-    font-size: 20px;
-}
-
-.active:hover,
-.active {
-    cursor: pointer;
-    font-weight: bolder;
-    color: black;
-    font-size: 30px;
 }
 
 .search-engine {
@@ -176,6 +150,10 @@ h2 {
 .forecast {
     color: #666d7f;
     text-align: center;
+}
+
+.weather-forecast-temperature-max {
+    display: block;
 }
 
 .forecast-min {
