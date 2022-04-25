@@ -1,34 +1,14 @@
 let mainCurrentTime = document.querySelector("#main-current-time");
 let bottomCurrentTime = document.querySelector("#bottom-livetime");
 
-function updateDisplayTime(time) {
-    let days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ];
-
-    let day = days[time.getDay()];
-    let hours = time.getHours();
-    let minutes = time.getMinutes();
-    let ampm = hours < 12 ? "a.m." : "p.m.";
-    hours = hours % 12;
-    hours = hours === 0 ? 12 : hours;
-    hours = hours < 10 ? "0" + hours : hours;
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-
-    let timeString = `${day} ${hours}:${minutes} ${ampm}`;
-    // let timeString = time.toLocalString("en-us", {
-    //     timeZone,
-    //     weekday: "long",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //     timeZoneName: "shortGeneruc",
-    // });
+function updateDisplayTime(time, timeZone) {
+    let timeString = time.toLocaleString("en-us", {
+        timeZone: timeZone,
+        weekday: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZoneName: "shortGeneric",
+    });
     mainCurrentTime.innerHTML = timeString;
 }
 
@@ -70,6 +50,9 @@ function displayForecast(updateTemperatureResponse) {
                     </div>`;
         }
     });
+
+    updateDisplayTime(new Date(), updateTemperatureResponse.data.timezone);
+    updateBottomTime(new Date());
     forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
 }
@@ -92,9 +75,6 @@ function updateBottomTime(time) {
     let timeString = `UPDATED ${year}/${month}/${date} ${hours}:${minutes} ${ampm} AWST`;
     bottomCurrentTime.innerHTML = timeString;
 }
-
-updateDisplayTime(new Date());
-updateBottomTime(new Date());
 
 function citySearch(searchEvent) {
     searchEvent.preventDefault();
@@ -127,7 +107,7 @@ function getForecast(coordinates) {
     let apiKey = `1c3ae5d402b2dfe20732c3c1797bed76`;
     let units = "metric";
     let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
-    console.log(apiUrl);
+
     axios.get(apiUrl).then(displayForecast);
 }
 
@@ -169,8 +149,6 @@ function updateSearchWeatherCondition(updateTemperatureResponse) {
         `http://openweathermap.org/img/wn/${updateTemperatureResponse.data.weather[0].icon}@2x.png`
     );
 
-    console.log(updateTemperatureResponse.data);
-
     getForecast(updateTemperatureResponse.data.coord);
 }
 
@@ -181,5 +159,4 @@ function changePosition() {
 let gpsButton = document.querySelector(".gps-location");
 gpsButton.addEventListener("click", changePosition);
 
-// displayCity("New York");
 changePosition();
