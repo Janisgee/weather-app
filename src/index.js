@@ -72,7 +72,7 @@ function updateBottomTime(time) {
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    let timeString = `UPDATED ${year}/${month}/${date} ${hours}:${minutes} ${ampm} AWST`;
+    let timeString = `UPDATED ${year}/${month}/${date} ${hours}:${minutes} ${ampm}`;
     bottomCurrentTime.innerHTML = timeString;
 }
 
