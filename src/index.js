@@ -25,6 +25,33 @@ function updateDisplayTime(time) {
     mainCurrentTime.innerHTML = timeString;
 }
 
+function displayForecast() {
+    let forecastElement = document.querySelector("#forecast");
+
+    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let forecastHTML = `<div class="row forecast">`;
+    days.forEach(function(day) {
+        forecastHTML =
+            forecastHTML +
+            `    
+                        <div class="col-2">
+                            <div class = "weather-forecast-date">
+                            ${day}
+                            </div>
+                            <img src="image/cloudy.png" alt="Day Forecast Image" width="60" />
+                            <div class="weather-forecast-temperature">
+                                <span class="weather-forecast-temperature-max"><strong> 25°C </strong></span>
+                                <span class="weather-forecast-temperature-min">
+                                <small> 21°C </small>
+                            </span>
+                        </div>
+                    </div>`;
+    });
+    forecastHTML = forecastHTML + `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+    console.log(forecastHTML);
+}
+
 function updateBottomTime(time) {
     let year = time.getFullYear();
     let month = time.getMonth() + 1;
@@ -99,7 +126,6 @@ function updatePosition(position) {
 }
 
 function updateSearchWeatherCondition(updateTemperatureResponse) {
-    console.log(updateTemperatureResponse.data.weather[0].icon);
     let currentSearchTemperature = Math.round(
         updateTemperatureResponse.data.main.temp
     );
@@ -149,3 +175,4 @@ let gpsButton = document.querySelector(".gps-location");
 gpsButton.addEventListener("click", changePosition);
 
 changePosition();
+displayForecast();
