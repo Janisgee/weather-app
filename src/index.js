@@ -2,13 +2,24 @@ let mainCurrentTime = document.querySelector("#main-current-time");
 let bottomCurrentTime = document.querySelector("#bottom-livetime");
 
 function updateDisplayTime(time, timeZone) {
-    let timeString = time.toLocaleString("en-us", {
-        timeZone: timeZone,
-        weekday: "long",
-        hour: "2-digit",
-        minute: "2-digit",
-        timeZoneName: "shortGeneric",
-    });
+    let timeString;
+    try {
+        timeString = time.toLocaleString("en-us", {
+            timeZone: timeZone,
+            weekday: "long",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZoneName: "shortGeneric",
+        });
+    } catch (error) {
+        timeString = time.toLocaleString("en-us", {
+            timeZone: timeZone,
+            weekday: "long",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+
     mainCurrentTime.innerHTML = timeString;
 }
 
