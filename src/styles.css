@@ -44,6 +44,14 @@ h2 {
     left: 12px;
 }
 
+#icon {
+    width: 70px;
+}
+
+#forecastIcon {
+    width: 60px;
+}
+
 .current-temperature {
     font-size: 70px;
     font-weight: bold;
