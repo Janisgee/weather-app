@@ -179,8 +179,14 @@ h2 {
         display: flex;
         justify-content: space-evenly;
     }
+    .current-environment {
+        margin-bottom: 22px;
+    }
 }
 
 @media (max-width: 576px) {
-    /* TODO */
+    .current-environment {
+        margin: 10px auto;
+        max-width: 190px;
+    }
 }
