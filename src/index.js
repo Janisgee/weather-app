@@ -41,7 +41,7 @@ function displayForecast(updateTemperatureResponse) {
             forecastHTML =
                 forecastHTML +
                 `    
-                        <div class="col-2">
+                        <div class="col-4 col-sm-4 col-md-2">
                             <div class = "weather-forecast-date">
                             ${formatDay(forecastDay.dt)}
                             </div>
@@ -170,4 +170,9 @@ function changePosition() {
 let gpsButton = document.querySelector(".gps-location");
 gpsButton.addEventListener("click", changePosition);
 
-changePosition();
+// changePosition();
+axios
+    .get(
+        "https://api.openweathermap.org/data/2.5/weather?q=sydney&appid=1c3ae5d402b2dfe20732c3c1797bed76&units=metric"
+    )
+    .then(updateSearchWeatherCondition);

@@ -1,10 +1,16 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
+    overflow: scroll;
 }
 
 h2 {
     line-height: 30px;
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
 }
 
 .weather-app-wrapper {
@@ -38,7 +44,7 @@ h2 {
 
 .current-date-and-time {
     font-weight: lighter;
-    color: #737e90;
+    color: #5f1abb;
     font-size: 18px;
     text-align: right;
 }
@@ -137,6 +143,11 @@ h2 {
     display: block;
 }
 
+.weather-forecast-date {
+    color: rgb(32, 117, 92);
+    font-weight: 700;
+}
+
 .forecast-min {
     font-size: 15px;
 }
@@ -155,6 +166,14 @@ h2 {
 .open-source-code-by {
     padding-top: 20px;
     text-align: center;
+}
+
+.open-source-code-by a {
+    text-decoration: none;
+}
+
+.open-source-code-by a:hover {
+    color: #f53a72;
 }
 
 @media (max-width: 768px) {
@@ -182,11 +201,20 @@ h2 {
     .current-environment {
         margin-bottom: 22px;
     }
+    .inside-card {
+        height: 265px;
+    }
+    #forecastIcon {
+        width: 45px;
+    }
 }
 
 @media (max-width: 576px) {
     .current-environment {
         margin: 10px auto;
         max-width: 190px;
+    }
+    .background-card {
+        margin: 6px auto 0px;
     }
 }
